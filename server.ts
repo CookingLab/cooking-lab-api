@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 
 app.get('/api/recipes', async (req, res) => {
-  const { diet, health, cuisineType, mealType, meat } = req.query;
+  const { diet, health, cuisineType, mealType, meat, dishType } = req.query;
 
   let url = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${process.env.APP_ID}&app_key=${process.env.APP_KEY}&cuisineType=${cuisineType}&mealType=${mealType}`;
 
@@ -27,6 +27,10 @@ app.get('/api/recipes', async (req, res) => {
 
   if (meat && typeof meat === 'string') {
     url += `&q=${meat}`;
+  }
+
+  if(dishType && typeof dishType === 'string') {
+    url += `&dishType=${dishType}`;
   }
 
   try {
